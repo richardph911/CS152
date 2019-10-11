@@ -1,0 +1,42 @@
+/********************
+ * Expected output:
+1
+2
+55
+********************/
+var tru = function(x,y) { x; };
+var fls = function(x,y) { y; };
+
+// Functions for pairs
+var pair = function(x,y) {
+  function(f) { f(x,y); };
+};
+
+var fst = function(p) { p(tru); };
+var snd = function(p) { p(fls); };
+
+var p = pair(1,2);
+print(fst(p));
+print(snd(p));
+
+// Functions for lists
+var cons = pair;
+var head = fst;
+var tail = snd;
+
+var isEmpty = function(lst) {
+  lst == null;
+};
+
+var nums = cons(1, cons(2, cons(3, cons(4, cons(5,
+    cons(6, cons(7, cons(8, cons(9, cons(10, null))))))))));
+
+
+var sumList = function(lst) {
+  if (isEmpty(lst)) 0;
+  else head(lst) + sumList(tail(lst));
+};
+
+print(sumList(nums));
+
+

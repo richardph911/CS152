@@ -1,0 +1,16 @@
+var factorial = function (num) {
+  if (num == 0) {
+    1;
+  } else {
+    var tmp = num;
+    while (num > 2) {
+      num = num - 1;
+      tmp = tmp * num;
+    }
+    tmp;
+  }
+};
+
+var result = factorial(8);
+print(result); // Prints 40320
+

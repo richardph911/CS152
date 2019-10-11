@@ -1,0 +1,14 @@
+var makeCounter = function() {
+  var i = 0;
+  // Implicitly returning the anon function
+  function() {
+    i = i + 1;
+  };
+};
+
+var ctr = makeCounter();
+print(ctr()); // prints 1
+print(ctr()); // prints 2
+print(ctr()); // prints 3
+print(ctr()); // prints 4
+
