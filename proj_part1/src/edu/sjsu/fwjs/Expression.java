@@ -135,9 +135,17 @@ class IfExpr implements Expression {
 		this.els = els;
 	}
 
+	// Evaluate condition, if equals a BoolVal(true) then evaluate thn, if equals BoolVal(false) evaluates els,
+	// if it equals some other type of Value, throws a RuntimeException
 	public Value evaluate(Environment env) {
-		// YOUR CODE HERE
-		return null;
+		Value cond_result = cond.evaluate(env);
+		if(cond_result.equals(new BoolVal(true))) {
+			return thn.evaluate(env);
+		}else if(cond_result.equals(new BoolVal(false))){
+			return els.evaluate(env);
+		}else {
+			throw new RuntimeException("Error: Invalid condition value!");
+		}
 	}
 }
 
@@ -153,9 +161,22 @@ class WhileExpr implements Expression {
 		this.body = body;
 	}
 
+	// Evaluate condition, checks if it is an instance of BoolVal, otherwise throws a runtime exception
 	public Value evaluate(Environment env) {
-		// YOUR CODE HERE
-		return null;
+		Value result = new NullVal();
+		Value condition = cond.evaluate(env);
+		if(condition instanceof BoolVal) {
+			
+			// Evaluates body until condition returns a BoolVal(true)
+			while(condition.equals(new BoolVal(true))) {
+				result = body.evaluate(env);
+				condition = cond.evaluate(env);
+			}
+			return result;
+		}else {
+			throw new RuntimeException("Invalid condition value!");
+		}
+
 	}
 }
 
@@ -171,9 +192,11 @@ class SeqExpr implements Expression {
 		this.e2 = e2;
 	}
 
+	// Evaluates both expressions in order, return Value of 2nd expression
 	public Value evaluate(Environment env) {
-		// YOUR CODE HERE
-		return null;
+		e1.evaluate(env);
+		return e2.evaluate(env);
+
 	}
 }
 
@@ -189,9 +212,12 @@ class VarDeclExpr implements Expression {
 		this.exp = exp;
 	}
 
+	// Evaluates the expression and create a var in local env with the new value
+	// Return the value
 	public Value evaluate(Environment env) {
-		// YOUR CODE HERE
-		return null;
+		Value v = exp.evaluate(env);
+		env.createVar(varName, v);
+		return v;
 	}
 }
 
@@ -207,10 +233,12 @@ class AssignExpr implements Expression {
 		this.varName = varName;
 		this.e = e;
 	}
-
+	
+	// Updates the var with result from evaluating expression
 	public Value evaluate(Environment env) {
-		// YOUR CODE HERE
-		return null;
+		Value result = e.evaluate(env);
+		env.updateVar(varName, result);
+		return result;
 	}
 }
 
@@ -226,9 +254,11 @@ class FunctionDeclExpr implements Expression {
 		this.body = body;
 	}
 
+	// Returns a ClosureVal value containing function definition body, parameters, 
+	// and the env passed into the function is the environment outside the function definition
 	public Value evaluate(Environment env) {
-		// YOUR CODE HERE
-		return null;
+		
+		return new ClosureVal(params, body, env);
 	}
 }
 
@@ -243,9 +273,19 @@ class FunctionAppExpr implements Expression {
 		this.f = f;
 		this.args = args;
 	}
-
+	
+	// Evaluates function definition f to get a ClosureVal value
+	// Construct a List<Value> containings the values obtained from evaluating each expression 
+	// in List<Expression> args
+	// Use apply method from ClosureVal to apply the values to each parameters in the function
+	// and return the value obtain from apply
 	public Value evaluate(Environment env) {
-		// YOUR CODE HERE
-		return null;
+		ClosureVal result = (ClosureVal) f.evaluate(env);
+		List<Value> vals = new ArrayList<Value>();
+		for(int i = 0; i < args.size(); i++) {
+			vals.add(args.get(i).evaluate(env));
+		}
+		return result.apply(vals);
+
 	}
 }
