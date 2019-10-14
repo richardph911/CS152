@@ -3,6 +3,8 @@ package edu.sjsu.fwjs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 /**
  * FWJS expressions.
  */
@@ -77,48 +79,51 @@ class BinOpExpr implements Expression {
 		this.e2 = e2;
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	public Value evaluate(Environment env) {
 		// YOUR CODE HERE
 		Value v1 = e1.evaluate(env);
 		Value v2 = e2.evaluate(env);
 		IntVal r;
-		switch (op) {
-		case ADD:
-			r = new IntVal(Integer.parseInt(v1.toString()) + Integer.parseInt(v2.toString()));
-			return (Value) r;
+		try{
+			switch (op) {
+			case ADD:
+				r = new IntVal(Integer.parseInt(v1.toString()) + Integer.parseInt(v2.toString()));
+				return (Value) r;
 
-		case SUBTRACT:
-			r = new IntVal(Integer.parseInt(v1.toString()) - Integer.parseInt(v2.toString()));
-			return (Value) r;
+			case SUBTRACT:
+				r = new IntVal(Integer.parseInt(v1.toString()) - Integer.parseInt(v2.toString()));
+				return (Value) r;
 
-		case MULTIPLY:
-			r = new IntVal(Integer.parseInt(v1.toString()) * Integer.parseInt(v2.toString()));
-			return (Value) r;
+			case MULTIPLY:
+				r = new IntVal(Integer.parseInt(v1.toString()) * Integer.parseInt(v2.toString()));
+				return (Value) r;
 
-		case DIVIDE:
-			r = new IntVal(Integer.parseInt(v1.toString()) / Integer.parseInt(v2.toString()));
-			return (Value) r;
+			case DIVIDE:
+				r = new IntVal(Integer.parseInt(v1.toString()) / Integer.parseInt(v2.toString()));
+				return (Value) r;
 
-		case EQ:
-			return new BoolVal(v1.equals(v2));
+			case EQ:
+				return new BoolVal(v1.equals(v2));
 
-		case GE:
-			return new BoolVal(Integer.parseInt(v1.toString()) >= Integer.parseInt(v2.toString()));
+			case GE:
+				return new BoolVal(Integer.parseInt(v1.toString()) >= Integer.parseInt(v2.toString()));
 
-		case GT:
-			return new BoolVal(Integer.parseInt(v1.toString()) > Integer.parseInt(v2.toString()));
-		case LE:
-			return new BoolVal(Integer.parseInt(v1.toString()) <= Integer.parseInt(v2.toString()));
-		case LT:
-			return new BoolVal(Integer.parseInt(v1.toString()) < Integer.parseInt(v2.toString()));
-		case MOD:
-			r = new IntVal(Integer.parseInt(v1.toString()) % Integer.parseInt(v2.toString()));
-			return (Value) r;
+			case GT:
+				return new BoolVal(Integer.parseInt(v1.toString()) > Integer.parseInt(v2.toString()));
+			case LE:
+				return new BoolVal(Integer.parseInt(v1.toString()) <= Integer.parseInt(v2.toString()));
+			case LT:
+				return new BoolVal(Integer.parseInt(v1.toString()) < Integer.parseInt(v2.toString()));
+			case MOD:
+				r = new IntVal(Integer.parseInt(v1.toString()) % Integer.parseInt(v2.toString()));
+				return (Value) r;
+			default:
+				throw new RuntimeException("Error");
+			}
+		}catch (Exception e){
+				throw new RuntimeException("Error");
 		}
-		return v1;
-
-	}
+    }
 }
 
 /**
@@ -172,7 +177,7 @@ class WhileExpr implements Expression {
 				result = body.evaluate(env);
 				condition = cond.evaluate(env);
 			}
-			return result;
+			return new NullVal();
 		}else {
 			throw new RuntimeException("Invalid condition value!");
 		}

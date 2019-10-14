@@ -92,6 +92,17 @@ public class ExpressionTest {
 		IntVal iv = (IntVal) boe.evaluate(env);
 		assertEquals(iv, new IntVal(10));
 	}
+	@Test
+	public void testBinOpExprSubFail() {
+		Environment env = new Environment();
+		BinOpExpr boe = new BinOpExpr(Op.SUBTRACT, new ValueExpr(new BoolVal(true)), new ValueExpr(new IntVal(2)));
+		try{
+			
+			IntVal iv = (IntVal) boe.evaluate(env);
+			fail();
+		}catch(Exception e){};
+		
+	}
 
 	@Test
 	public void testBinOpExprMul() {
@@ -132,6 +143,17 @@ public class ExpressionTest {
 		Value iv = boe.evaluate(env);
 		assertEquals(iv, new BoolVal(false));
 	}
+	@Test
+	public void testBinOpExprGEFail() {
+		Environment env = new Environment();
+		BinOpExpr boe = new BinOpExpr(Op.GE, new ValueExpr(new BoolVal(false)), new ValueExpr(new IntVal(8)));
+		try{
+		Value iv = boe.evaluate(env);
+		fail();
+		}catch(Exception e){}
+	}
+		
+
 
 	@Test
 	public void testBinOpExprMOD() {
