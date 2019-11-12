@@ -1,0 +1,1 @@
+(prog (stat (expr var i = (expr 0)) ;) (stat while ( (expr (expr i) < (expr 10)) ) (block { (stat print ( (expr i) ) ;) (stat (expr i = (expr (expr i) + (expr 1))) ;) })))

@@ -1,0 +1,6 @@
+var consts = {};
+//consts.PI = 3.14;
+//consts.e = 2.718;
+//print(consts.PI);
+//print(consts.e);
+

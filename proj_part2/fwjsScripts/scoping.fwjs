@@ -1,0 +1,19 @@
+/********************
+ * Expected output:
+42
+666
+********************/
+var x = 42;
+
+var f = function() {
+  print(x);
+};
+
+var g = function() {
+  var x = 666;
+  f();
+  print(x);
+};
+
+g();
+

@@ -1,0 +1,1 @@
+(prog (stat (expr var x = (expr 0)) ;) (stat (expr x = (expr (expr 3) + (expr 4))) ;) (stat (expr y = (expr true)) ;) (stat (expr z = (expr false)) ;) (stat (expr y) ;) (stat print ( (expr x) ) ;) (stat print ( (expr y) ) ;))

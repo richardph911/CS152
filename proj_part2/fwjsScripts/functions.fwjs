@@ -1,0 +1,16 @@
+/***************
+ * Expected output:
+function() {...};
+2
+3
+***************/
+var ident = function(x) { x; };
+var two = function() { 2; };
+print(ident(two));
+print(ident(two()));
+
+var addTwo = function(x, y) {
+  x + y;
+};
+print(addTwo(1,2));
+

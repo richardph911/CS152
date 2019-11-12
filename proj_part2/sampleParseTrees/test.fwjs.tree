@@ -1,0 +1,1 @@
+(prog (stat (expr var f = (expr function (params ( op , x , y )) { (stat (expr (expr op) (args ( (expr x) , (expr y) ))) ;) })) ;) (stat (expr var z = (expr (expr f) (args ( (expr function (params ( x , y )) { (stat (expr (expr x) + (expr y)) ;) }) , (expr 3) , (expr 4) )))) ;) (stat print ( (expr z) ) ;) (stat (expr var x = (expr null)) ;) (stat print ( (expr x) ) ;))
